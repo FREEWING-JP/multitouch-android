@@ -3,8 +3,6 @@ package com.dmitrybrant.android.multitouch;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.content.Context;
@@ -21,8 +19,8 @@ public class MultiTouchCanvas extends View {
         void onStatus(List<Point> pointerLocations, int numPoints);
     }
 
-    @Nullable private MultiTouchStatusListener statusListener;
-    @NonNull private Paint paint = new Paint();
+    private MultiTouchStatusListener statusListener;
+    private Paint paint = new Paint();
     private int totalTouches;
     private int circleRadius;
 
@@ -45,7 +43,7 @@ public class MultiTouchCanvas extends View {
         init();
     }
 
-    public void setStatusListener(@Nullable MultiTouchStatusListener listener) {
+    public void setStatusListener(MultiTouchStatusListener listener) {
         statusListener = listener;
     }
 

@@ -3,12 +3,11 @@ package com.dmitrybrant.android.multitouch;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
-import androidx.core.view.ViewCompat;
 
 import java.util.List;
 
@@ -28,7 +27,13 @@ public class MultiTouchActivity extends Activity implements MultiTouchCanvas.Mul
         btnAbout.getBackground().setAlpha(128);
         btnAbout.setOnClickListener(v -> showAboutDialog());
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.containerView), (v, insets) -> {
+        // Added in API level 20
+        // setOnApplyWindowInsetsListener
+        // https://developer.android.com/reference/android/view/View.OnApplyWindowInsetsListener
+        // if (Build.VERSION.SDK_INT >= 21) {}
+        if (Build.VERSION.SDK_INT >= 20) {
+            // release APK 17KB
+            findViewById(R.id.containerView).setOnApplyWindowInsetsListener((v, insets) -> {
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) btnAbout.getLayoutParams();
             params.topMargin = insets.getSystemWindowInsetTop();
             params.bottomMargin = insets.getSystemWindowInsetBottom();
@@ -36,6 +41,11 @@ public class MultiTouchActivity extends Activity implements MultiTouchCanvas.Mul
             params.rightMargin = insets.getSystemWindowInsetRight();
             return insets.consumeSystemWindowInsets();
         });
+            // release APK 1141KB
+            // import androidx.core.view.ViewCompat;
+            // ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.containerView), (v, insets) -> {
+            // }
+        }
     }
 
     @Override
